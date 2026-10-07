@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kabeer Nayyar</title>
+<meta name="description" content="Kabeer Nayyar, EECS student at UC Berkeley working on digital design, computer architecture and hardware for neurotechnology.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script>
+  try { const t = localStorage.getItem('theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+</script>
+<style>
+  /* ===== Colors: change these to restyle the site ===== */
+  :root {
+    --paper: #FFFFFF;
+    --ink: #3D4144;
+    --heading: #13294B;
+    --muted: #6A7075;
+    --line: #E6E9EF;
+    --accent: #8A5A2E;     /* brown: links, icons, highlights */
+    --navy: #13294B;       /* top bar */
+    --navy-ink: #FFFFFF;
+    --navy-soft: #B9C7DD;
+    --panel: #FBF8F4;      /* sidebar panel */
+    --panel-ink: #13294B;
+    --panel-line: #E2D3BF;
+    --tag: #F3EADF;
+  }
+  :root[data-theme="dark"] {
+    --paper: #111A2B; --ink: #D3DAE6; --heading: #F1F4F9; --muted: #93A0B5;
+    --line: #26324A; --accent: #D4A574;
+    --navy: #0A1324; --navy-ink: #FFFFFF; --navy-soft: #8C9BB5;
+    --panel: #151F33; --panel-ink: #E3EBF7; --panel-line: #4A3A2A; --tag: #2A241E;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #111A2B; --ink: #D3DAE6; --heading: #F1F4F9; --muted: #93A0B5;
+      --line: #26324A; --accent: #D4A574;
+      --navy: #0A1324; --navy-ink: #FFFFFF; --navy-soft: #8C9BB5;
+      --panel: #151F33; --panel-ink: #E3EBF7; --panel-line: #4A3A2A; --tag: #2A241E;
+    }
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 17px; }
+  body {
+    background: var(--paper); color: var(--ink);
+    font-family: "Source Sans 3", -apple-system, "Segoe UI", system-ui, sans-serif;
+    line-height: 1.65; -webkit-font-smoothing: antialiased;
+    transition: background .2s, color .2s;
+  }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
+
+  /* ===== Top bar ===== */
+  .masthead { background: var(--navy); }
+  .masthead nav {
+    max-width: 1280px; margin: 0 auto; padding: 18px 28px;
+    display: flex; align-items: center; gap: 44px; flex-wrap: wrap;
+  }
+  .site-title { font-weight: 700; font-size: 1.2rem; color: var(--navy-ink); text-decoration: none; }
+  .menu { list-style: none; display: flex; gap: 36px; flex-wrap: wrap; }
+  .menu a { color: var(--navy-soft); text-decoration: none; font-size: 1.1rem; }
+  .menu a { padding-bottom: 3px; border-bottom: 2px solid transparent; }
+  .menu a:hover, .menu a[aria-current="page"] { color: var(--navy-ink); }
+  .menu a[aria-current="page"] { border-bottom-color: #C8955F; }
+  .theme-toggle { background: none; border: 0; cursor: pointer; color: var(--navy-ink); font-size: 1.15rem; padding: 4px; line-height: 1; }
+  .masthead a:focus-visible, .masthead button:focus-visible { outline-color: var(--navy-ink); }
+
+  /* ===== Layout ===== */
+  .layout {
+    max-width: 1280px; margin: 0 auto; padding: 48px 28px 80px;
+    display: grid; grid-template-columns: 310px 1fr; gap: 64px;
+  }
+
+  /* ===== Profile sidebar ===== */
+  .profile {
+    align-self: start; position: sticky; top: 28px;
+    background: var(--panel); color: var(--panel-ink);
+    border: 1px solid var(--panel-line); border-radius: 16px; padding: 28px 26px;
+  }
+  .avatar {
+    width: 210px; height: 210px; margin: 0 auto; border-radius: 50%;
+    border: 3px solid var(--accent); padding: 5px;
+  }
+  .avatar > * {
+    width: 100%; height: 100%; border-radius: 50%; object-fit: cover;
+    background: var(--navy); color: #fff; display: grid; place-items: center;
+    font-size: 3.4rem; font-weight: 700;
+  }
+  .profile h2 { font-size: 1.4rem; margin-top: 20px; line-height: 1.3; }
+  .tagline { margin-top: 6px; font-size: 1rem; line-height: 1.5; opacity: .85; }
+  .profile-links { list-style: none; margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--panel-line); }
+  .profile-links li { display: flex; align-items: center; gap: 14px; padding: 5px 0; }
+  .profile-links i { width: 20px; text-align: center; color: var(--accent); }
+  .profile-links a { color: inherit; text-decoration: none; }
+  .profile-links a:hover { text-decoration: underline; }
+
+  /* ===== Content ===== */
+  .content { max-width: 780px; font-size: 1.15rem; }
+  .page[hidden] { display: none; }
+  .page h1 { font-size: 2.8rem; color: var(--heading); line-height: 1.15; margin-bottom: 22px; letter-spacing: -0.01em; }
+  .page h1::after { content: ""; display: block; width: 56px; height: 3px; background: var(--accent); margin-top: 14px; border-radius: 2px; }
+  .page h2 { font-size: 1.4rem; color: var(--heading); margin: 36px 0 10px; }
+  .page p + p { margin-top: 1.1em; }
+
+  .entry { padding: 22px 0; border-bottom: 1px solid var(--line); }
+  .entry:first-of-type { padding-top: 4px; }
+  .entry-head { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; align-items: baseline; }
+  .entry h3 { font-size: 1.3rem; color: var(--heading); line-height: 1.3; }
+  .entry .when { color: var(--muted); font-size: 1rem; white-space: nowrap; }
+  .entry .meta { color: var(--muted); font-size: 1rem; margin: 2px 0 8px; }
+  .entry ul { margin: 0 0 0 1.2em; font-size: 1.05rem; }
+  .entry li + li { margin-top: 4px; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; }
+  .tags li { background: var(--tag); color: var(--ink); border: 1px solid var(--panel-line); border-radius: 999px; padding: 3px 14px; font-size: 1rem; }
+
+  .courses { list-style: none; }
+  .courses li { padding: 10px 0; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; gap: 16px; }
+  .courses .status { color: var(--muted); font-size: .95rem; white-space: nowrap; }
+
+  footer { border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; text-align: center; padding: 28px; }
+
+  /* ===== Phones & tablets ===== */
+  @media (max-width: 900px) {
+    html { font-size: 16px; }
+    .masthead nav { padding: 14px 16px; gap: 12px 24px; }
+    .menu { gap: 20px; }
+    .layout { grid-template-columns: 1fr; gap: 32px; padding: 24px 16px 56px; }
+    .profile { position: static; display: grid; grid-template-columns: 96px 1fr; gap: 0 18px; align-items: center; padding: 20px; }
+    .avatar { width: 96px; height: 96px; padding: 3px; margin: 0; grid-row: span 2; }
+    .avatar > * { font-size: 2rem; }
+    .profile h2 { margin-top: 0; }
+    .profile-links { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 4px 22px; }
+    .content { font-size: 1.08rem; }
+    .page h1 { font-size: 2.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <nav aria-label="Main">
+    <a class="site-title" href="#about">Kabeer Nayyar</a>
+    <ul class="menu">
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#coursework">Coursework</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode"><i class="fa-solid fa-circle-half-stroke"></i></button>
+  </nav>
+</header>
+
+<div class="layout">
+
+  <aside class="profile">
+    <div class="avatar">
+      <!-- Upload your photo as me.jpg, then replace the div below with:
+           <img src="me.jpg" alt="Kabeer Nayyar"> -->
+      <div aria-hidden="true">KN</div>
+    </div>
+    <h2>Kabeer Nayyar</h2>
+    <p class="tagline">EECS at UC Berkeley<br>Class of 2028</p>
+    <ul class="profile-links">
+      <li><i class="fa-solid fa-building-columns"></i><span>UC Berkeley</span></li>
+      <li><i class="fa-solid fa-envelope"></i><a href="mailto:kabeer_nayyar@berkeley.edu">Email</a></li>
+      <li><i class="fa-brands fa-github"></i><a href="https://github.com/kabeer-nayyar">GitHub</a></li>
+      <li><i class="fa-brands fa-linkedin"></i><a href="https://www.linkedin.com/in/kabeernayyar">LinkedIn</a></li>
+    </ul>
+  </aside>
+
+  <main class="content">
+
+    <section class="page" id="about">
+      <h1>About me</h1>
+      <p>Hi! I'm Kabeer, an undergraduate at UC Berkeley studying Electrical Engineering and Computer Sciences (EECS). I'm interested in digital design and computer architecture, and in building hardware for neurotechnology and medical devices.</p>
+      <p>I'm currently a Teaching Assistant in the EECS department, where I've helped teach circuit analysis in EECS 16B and computer architecture in CS 61C. This past summer I was a Research Engineer Intern at Radiata, speeding up transcranial magnetic stimulation (TMS) simulations for an Alzheimer's therapy.</p>
+      <p>Before that, I designed an amplifier PCB for a neuromodulation device in the Liwei Lin Lab at Berkeley, and built a morphing robot at USC RoboLAND. On the side, I'm building a pipelined RISC-V CPU and an EMG wristband that turns muscle signals into computer controls.</p>
+      <p>To learn more, check out my <a href="#experience">Experience</a>, <a href="#projects">Projects</a>, or <a href="#coursework">Coursework</a>.</p>
+    </section>
+
+    <section class="page" id="experience" hidden>
+      <h1>Experience</h1>
+
+      <article class="entry">
+        <div class="entry-head"><h3>Radiata</h3><span class="when">May 2026 – Aug 2026</span></div>
+        <p class="meta">Research Engineer Intern · Mill Valley, CA</p>
+        <ul>
+          <li>Boosted transcranial magnetic stimulation (TMS) simulation performance by 4x for an Alzheimer's therapeutic.</li>
+          <li>Developed a pipelined algorithm with a classical control based solution, followed by optimization for binary TMS input.</li>
+          <li>Implemented threading in MATLAB to speed up gradient descent calculations by 2x.</li>
+        </ul>
+      </article>
+
+      <article class="entry">
+        <div class="entry-head"><h3>UC Berkeley EECS</h3><span class="when">Jan 2026 – Present</span></div>
+        <p class="meta">Teaching Assistant · Berkeley, CA</p>
+        <ul>
+          <li>Support 1000+ students over three semesters in circuit analysis (EECS 16B) and computer architecture (CS 61C).</li>
+          <li>Host weekly discussion sections for 20+ students and office hours covering C, RISC-V, CPU pipelining and caches.</li>
+          <li>Hosted weekly lab sections for 40+ students, guiding hands-on circuit construction and instrumentation.</li>
+          <li>Write, edit and quality check exam questions, discussion worksheets and lab assignments.</li>
+        </ul>
+      </article>
+
+      <article class="entry">
+        <div class="entry-head"><h3>UC Berkeley Liwei Lin Lab</h3><span class="when">Mar 2025 – Dec 2025</span></div>
+        <p class="meta">Undergraduate Research Assistant · Berkeley, CA</p>
+        <ul>
+          <li>Designed an amplifier PCB in KiCad for a neuromodulating PMUT device, from schematic to routing.</li>
+          <li>Worked with graduate researchers to assemble and optimize a BOM for cost, manufacturability and performance.</li>
+          <li>Validated gain, stability and signal integrity using oscilloscopes, waveform generators and DMMs.</li>
+        </ul>
+      </article>
+
+      <article class="entry">
+        <div class="entry-head"><h3>USC RoboLAND</h3><span class="when">May 2025 – Aug 2025</span></div>
+        <p class="meta">Robotics Research Intern · Los Angeles, CA</p>
+        <ul>
+          <li>Proposed and developed a wireless morphing robot using a ballscrew-driven spine actuated by a direct-drive motor.</li>
+          <li>Improved feedback control accuracy through system modeling, mechanical redesign and iterative validation testing.</li>
+          <li>Supported hardware integration, troubleshooting and verification of electromechanical subsystems.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="page" id="projects" hidden>
+      <h1>Projects</h1>
+
+      <article class="entry">
+        <div class="entry-head"><h3>Five-Stage Pipelined RISC-V CPU with Caches</h3><span class="when">Aug 2026 – Present</span></div>
+        <p class="meta">SystemVerilog</p>
+        <ul>
+          <li>Designing a 5-stage pipeline with hazard detection and data forwarding to improve throughput and reduce stalls.</li>
+          <li>Implementing instruction and data caches with efficient read/write hit handling to cut memory latency.</li>
+          <li>Verifying datapath and control logic with simulation testbenches across hazard cases.</li>
+        </ul>
+      </article>
+
+      <article class="entry">
+        <div class="entry-head"><h3>EMG Wristband for Computer Control</h3><span class="when">Jan 2026 – Present</span></div>
+        <p class="meta">KiCad, ESP32</p>
+        <ul>
+          <li>Designing a wristband that translates muscle signals into gesture controls for a human–machine interface.</li>
+          <li>Developing a low-noise analog front end and microcontroller-based DAQ with signal processing and classification for real-time sampling and wireless transmission.</li>
+          <li>Iterating on hardware validation and signal integrity to improve accuracy and reliability.</li>
+        </ul>
+      </article>
+
+      <article class="entry">
+        <div class="entry-head"><h3>Portable FM Radio</h3><span class="when">Jan 2026 – May 2026</span></div>
+        <p class="meta">KiCad, ESP32, SolidWorks</p>
+        <ul>
+          <li>Designed an FM radio PCB using an ESP32-S3 and Si4735 receiver IC driving an LCD display and audio output.</li>
+          <li>Implemented automatic audio and power-path switching between speaker/headphone and USB-C/LiPo battery.</li>
+          <li>Built a button-controlled UI for tuning and volume, and a 3D-printed enclosure for the board.</li>
+        </ul>
+      </article>
+
+      <article class="entry">
+        <div class="entry-head"><h3>Scheme Interpreter</h3><span class="when">Nov 2025 – Dec 2025</span></div>
+        <p class="meta">Python</p>
+        <ul>
+          <li>Built an interpreter for a subset of Scheme (Lisp), implementing expression evaluation and syntax parsing.</li>
+          <li>Applied the lexical and semantic analysis techniques language runtimes use to parse and execute code.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="page" id="coursework" hidden>
+      <h1>Coursework</h1>
+      <p>B.S. Electrical Engineering and Computer Sciences, UC Berkeley. Expected May 2028.</p>
+
+      <h2>Relevant courses</h2>
+      <ul class="courses">
+        <li><span>Digital Design and Integrated Circuits, with ASIC Lab</span><span class="status">In progress</span></li>
+        <li><span>Computer Architecture</span><span class="status">In progress</span></li>
+        <li><span>Compilers</span><span class="status">In progress</span></li>
+        <li><span>Microelectronic Devices and Circuits</span><span class="status">Completed</span></li>
+        <li><span>Signals and Information Systems</span><span class="status">Completed</span></li>
+        <li><span>Data Structures</span><span class="status">Completed</span></li>
+        <li><span>Abstract Linear Algebra</span><span class="status">Completed</span></li>
+      </ul>
+
+      <h2>Languages</h2>
+      <ul class="tags">
+        <li>SystemVerilog</li><li>Verilog</li><li>C</li><li>Python</li><li>RISC-V</li><li>Java</li>
+        <li>x86</li><li>MATLAB</li><li>OCaml</li><li>SQL</li>
+      </ul>
+
+      <h2>Tools &amp; frameworks</h2>
+      <ul class="tags">
+        <li>ROCm</li><li>Git</li><li>GDB</li><li>Makefile</li><li>NumPy</li><li>Valgrind</li>
+        <li>KiCad</li><li>WaveForms</li><li>LTspice</li>
+      </ul>
+    </section>
+
+  </main>
+</div>
+
+<footer>© <span id="y">2026</span> Kabeer Nayyar</footer>
+
+<script>
+  document.getElementById('y').textContent = new Date().getFullYear();
+
+  const pages = [...document.querySelectorAll('.page')];
+  const navLinks = [...document.querySelectorAll('.menu a')];
+  function show() {
+    const id = (location.hash || '#about').slice(1);
+    const target = pages.some(p => p.id === id) ? id : 'about';
+    pages.forEach(p => p.hidden = p.id !== target);
+    navLinks.forEach(a => a.getAttribute('href') === '#' + target
+      ? a.setAttribute('aria-current', 'page') : a.removeAttribute('aria-current'));
+    window.scrollTo(0, 0);
+  }
+  window.addEventListener('hashchange', show);
+  show();
+
+  document.getElementById('themeToggle').addEventListener('click', () => {
+    const root = document.documentElement;
+    const isDark = root.dataset.theme
+      ? root.dataset.theme === 'dark'
+      : matchMedia('(prefers-color-scheme: dark)').matches;
+    root.dataset.theme = isDark ? 'light' : 'dark';
+    try { localStorage.setItem('theme', root.dataset.theme); } catch (e) {}
+  });
+</script>
+</body>
+</html>
